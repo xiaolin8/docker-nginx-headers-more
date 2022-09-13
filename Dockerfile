@@ -1,10 +1,10 @@
-FROM alpine:3.9
+FROM alpine
 
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
-ENV NGINX_VERSION 1.15.8
+ENV NGINX_VERSION 1.21.3
 
-ENV HEADERS_MORE=0.33
+ENV HEADERS_MORE=0.34
 ENV SOURCE_DIR=/tmp/src
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
@@ -88,7 +88,7 @@ echo "Fetching GPG key $GPG_KEYS from $server"; \
 gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$GPG_KEYS" && found=yes && break; \
 done; \
 test -z "$found" && echo >&2 "error: failed to fetch GPG key $GPG_KEYS" && exit 1; \
-gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
+# gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
 && rm -rf "$GNUPGHOME" nginx.tar.gz.asc \
 && mkdir -p /usr/src \
 && tar -zxC /usr/src -f nginx.tar.gz \
